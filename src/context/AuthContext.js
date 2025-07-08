@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (username, password) => {
-    if (username === 'admin' && password === 'admin') {
+    if (username === 'admin' && password === 'admin@123') {
       localStorage.setItem('isLoggedIn', 'true');
       setIsLoggedIn(true);
       return true;
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
      router.replace('/');
+    toast.success("Logged out successfully");
   };
 
   return (

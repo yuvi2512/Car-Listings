@@ -20,6 +20,8 @@ import {
 import EditDialog from "@/components/EditDialog";
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
+import toast from "react-hot-toast";
+
 
 export async function getServerSideProps() {
   const res = await fetch("http://localhost:3000/api/listings");
@@ -50,6 +52,12 @@ export default function Dashboard({ listings }) {
     });
     const updated = await res.json();
     setRows((prev) => prev.map((row) => (row.id === id ? updated : row)));
+
+    if (action === "rejected") { 
+      toast.error("Listing rejected");
+    } else if (action === "approved") {
+      toast.success("Listing approved");
+    } 
   };
 
   const filteredRows =

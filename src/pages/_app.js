@@ -1,14 +1,30 @@
-import { AuthProvider } from '@/context/AuthContext';
-import Head from 'next/head';
-import '@/styles/globals.css';
+import { AuthProvider } from "@/context/AuthContext";
+import "@/styles/globals.css";
+import { Toaster } from "react-hot-toast";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1976d2",
+    },
+    secondary: {
+      main: "#ff4081",
+    },
+  },
+  typography: {
+    fontFamily: "Roboto, sans-serif",
+  },
+});
 
 export default function App({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <Head>
-        <title>Admin Dashboard</title>
-      </Head>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Toaster position="top-left" reverseOrder={false} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

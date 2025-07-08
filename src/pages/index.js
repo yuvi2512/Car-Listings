@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { TextField, Button, Container, Card,CardHeader,Divider } from "@mui/material";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -12,8 +13,9 @@ export default function LoginPage() {
   const handleLogin = () => {
     if (login(username, password)) {
       router.push("/dashboard");
+      toast.success("Login successful");
     } else {
-      alert("Invalid credentials");
+      toast.error("Invalid credentials");
     }
   };
 

@@ -1,5 +1,7 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
+import toast from "react-hot-toast";
+
 
 export default function EditDialog({ data, onClose, onSave }) {
   const [form, setForm] = useState({});
@@ -16,6 +18,8 @@ export default function EditDialog({ data, onClose, onSave }) {
     });
     const updated = await res.json();
     onSave(updated);
+
+    toast.success("Listing updated successfully");
   };
 
   return (
