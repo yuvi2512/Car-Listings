@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -18,10 +18,9 @@ import {
   Divider,
 } from "@mui/material";
 import EditDialog from "@/components/EditDialog";
-import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/router';
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-
 
 export async function getServerSideProps() {
   const res = await fetch("http://localhost:3000/api/listings");
@@ -39,8 +38,8 @@ export default function Dashboard({ listings }) {
 
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
-    if (isLoggedIn===false) {
-      router.replace('/');
+    if (isLoggedIn === false) {
+      router.replace("/");
     }
   }, [isLoggedIn, router]);
 
@@ -53,11 +52,11 @@ export default function Dashboard({ listings }) {
     const updated = await res.json();
     setRows((prev) => prev.map((row) => (row.id === id ? updated : row)));
 
-    if (action === "rejected") { 
+    if (action === "rejected") {
       toast.error("Listing rejected");
     } else if (action === "approved") {
       toast.success("Listing approved");
-    } 
+    }
   };
 
   const filteredRows =
@@ -69,7 +68,9 @@ export default function Dashboard({ listings }) {
     <Card sx={{ padding: 4, margin: 10 }} elevation={5}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <CardHeader title="Admin Dashboard" />
-        <Button variant="outlined" color="error" onClick={logout}>Logout</Button>
+        <Button variant="outlined" color="error" onClick={logout}>
+          Logout
+        </Button>
       </Box>
       <Divider sx={{ mb: 2 }} />
       <Box sx={{ mt: 4 }}>
@@ -104,8 +105,22 @@ export default function Dashboard({ listings }) {
                   <TableCell>{row.owner}</TableCell>
                   <TableCell>{row.status}</TableCell>
                   <TableCell>
-                    <Button onClick={() => handleAction(row.id, "approved")}>Approve</Button>
-                    <Button onClick={() => handleAction(row.id, "rejected")}>Reject</Button>
+                    <Button
+                      onClick={() => handleAction(row.id, "approved")}
+                      variant="outlined"
+                      color="success"
+                    >
+                      {" "}
+                      Approve
+                    </Button>
+                    <Button
+                      onClick={() => handleAction(row.id, "rejected")}
+                      variant="outlined"
+                      color="error"
+                      sx={{ ml: 1 }}
+                    >
+                      Reject
+                    </Button>
                     <Button onClick={() => setEditData(row)}>Edit</Button>
                   </TableCell>
                 </TableRow>
